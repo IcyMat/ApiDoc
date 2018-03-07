@@ -1,0 +1,30 @@
+{
+  "name": "icymat/apidoc",
+  "type": "library",
+  "description": "IcyMat API Documentation creator",
+  "keywords": [
+    "API",
+    "Documentation"
+  ],
+  "homepage": "http://icymat.pl",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mateusz Kolasa",
+      "email": "kontakt@mkolasa.eu"
+    }
+  ],
+  "require": {
+    "php": "^7.0"
+  },
+  "require-dev": {},
+  "conflict": {},
+  "autoload": {
+    "psr-4": {
+      "IcyMat\\ApiDoc\\": "src/"
+    }
+  },
+  "support": {
+    "docs": "https://secure.icymat.pl/dev/contact.html"
+  }
+}
