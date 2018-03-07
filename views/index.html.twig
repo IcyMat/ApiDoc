@@ -51,13 +51,22 @@
 
                 <div class="imd-row">
                     {% for method in section.methods %}
-                        {% set color = 'blue' %}
                         {% if method.methods[0] == 'POST' %}
                             {% set color = 'green' %}
+                            {% set textColor = 'green' %}
+                        {% elseif method.methods[0] == 'PUT' %}
+                            {% set color = 'yellow' %}
+                            {% set textColor = 'gray' %}
+                        {% elseif method.methods[0] == 'DELETE' %}
+                            {% set color = 'red' %}
+                            {% set textColor = 'red' %}
+                        {% else %}
+                            {% set color = 'blue' %}
+                            {% set textColor = 'blue' %}
                         {% endif %}
 
                         <div class="imd-col-12">
-                            <div class="imd-notification imd-bg-20-{{ color }} imd-text-{{ color }}">
+                            <div class="imd-notification imd-bg-20-{{ color }} imd-text-{{ textColor }}">
                                 <strong>{{ method.methods[0] }}</strong> {{ method.route }}
                             </div>
 
