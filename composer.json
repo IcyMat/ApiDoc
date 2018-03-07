@@ -25,6 +25,7 @@
       "IcyMat\\ApiDoc\\": "src/"
     }
   },
+  "bin": ["bin/api_docs_generator"],
   "support": {
     "docs": "https://secure.icymat.pl/dev/contact.html"
   }
