@@ -4,14 +4,18 @@ namespace IcyMat\ApiDoc;
 
 class ApiDoc
 {
-    public function generarteDoc($directory)
+    public function generarteDoc($directory) : array
     {
         $files = $this->listDirectory($directory);
 
+        $docData = [];
+
         $docGenerator = new DocReader(new CommentParser());
         foreach ($files as $file) {
-            $docGenerator->getDocCommentsForFile($file);
+            $docData[] = $docGenerator->getDocCommentsForFile($file);
         }
+
+        return $docData;
     }
 
     private function listDirectory(string $directory = '.', array $expectedExtensions = ['php']) : array

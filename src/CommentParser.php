@@ -9,6 +9,12 @@ use IcyMat\ApiDoc\Parser\ApiRoute;
 
 class CommentParser
 {
+
+    public static $availableCommand = [
+        'ApiRoute',
+        'ApiMethods'
+    ];
+
     public function parseComment(array $comment) : array
     {
         $resultData = [];

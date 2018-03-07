@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+
+include_once __DIR__ . '/../../../autoload.php';
+
+if (count($argv) == 1) {
+    die("Directory path is required\n");
+}
+
+if (count($argv) == 2) {
+    die("Destination path is required\n");
+}
+
+$resource = $argv[1];
+$destination = $argv[2];
+
+$docGenerator = new \IcyMat\ApiDoc\ApiDoc();
+$docData = $docGenerator->generarteDoc(__DIR__ . '/../../../../' . $resource);
+
+if (!file_exists(__DIR__ . '/../../../../' . $destination)) {
+    mkdir(__DIR__ . '/../../../../' . $destination);
+}
+
+$loader = new \Twig_Loader_Filesystem(__DIR__ . '/../views');
+$twig = new \Twig_Environment($loader);
+
+$docPath = __DIR__ . '/../../../../' . $destination . '/documentation.html';
+
+$f = fopen($docPath, 'w+');
+fputs($f, $twig->render('index.html.twig', ['docData' => $docData]));
+fclose($f);

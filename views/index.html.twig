@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>IcyMat API Documentation</title>
+
+        <link rel="stylesheet" href="https://secure.icymat.pl/cdn/icymat-design.css">
+    </head>
+    <body class="imd-body">
+        <nav id="preview-navigation" class="imd-nav imd-nav-top imd-nav-light">
+            <div class="imd-nav-container imd-bg-green imd-text-white">
+                <span class="imd-nav-brand">
+                    <a href="#" class="imd-text-white">
+                        IcyMat API Documentation
+                    </a>
+                </span>
+
+                <ul class="imd-nav-menu">
+                    <li>
+                        <a href="#navigation-elements" class="imd-text-white imd-active">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#navigation-elements" class="imd-text-white">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#navigation-elements" class="imd-text-white">Link 3</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="imd-container">
+            {% for file in docData %}
+                <div class="imd-row">
+                    {% for method in file %}
+                        {% set color = 'blue' %}
+                        {% if method.methods[0] == 'POST' %}
+                            {% set color = 'yellow' %}
+                        {% endif %}
+
+                        <div class="imd-col-12">
+                            <div class="imd-notification imd-bg-20-{{ color }} imd-text-{{ color }}">
+                                <strong>{{ method.methods[0] }}</strong> {{ method.route }}
+                            </div>
+
+                            <p>{{ method.description.description }}</p>
+
+                            {% if method.parameters|length > 0 %}
+                                <h2>Parameters</h2>
+                                <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Nullable</th>
+                                        <th>Required</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    {% for parameter in method.parameters %}
+                                        <tr>
+                                            <td>{{ parameter.name }}</td>
+                                            <td>{{ parameter.type }}</td>
+                                            {% if parameter.nullable %}
+                                                <td class="imd-text-green">
+                                                    <span class="imd-icon imd-icon-checkmark"></span>
+                                                </td>
+                                            {% else %}
+                                                <td class="imd-text-red">
+                                                    <span class="imd-icon imd-icon-cross"></span>
+                                                </td>
+                                            {% endif %}
+                                            {% if parameter.required %}
+                                                <td class="imd-text-green">
+                                                    <span class="imd-icon imd-icon-checkmark"></span>
+                                                </td>
+                                            {% else %}
+                                                <td class="imd-text-red">
+                                                    <span class="imd-icon imd-icon-cross"></span>
+                                                </td>
+                                            {% endif %}
+                                            <td>{{ parameter.description }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+
+                            <pre>{{ method.response }}</pre>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://secure.icymat.pl/cdn/icymat-design.js"></script>
+    </body>
+</html>
