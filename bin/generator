@@ -17,6 +17,9 @@ $destination = $argv[2];
 $docGenerator = new \IcyMat\ApiDoc\ApiDoc();
 $docData = $docGenerator->generarteDoc(__DIR__ . '/../../../../' . $resource);
 
+$docGenerator = new \IcyMat\ApiDoc\Docs\DocumentationGenerator();
+$docData = $docGenerator->createDocData($docData);
+
 if (!file_exists(__DIR__ . '/../../../../' . $destination)) {
     mkdir(__DIR__ . '/../../../../' . $destination);
 }
@@ -28,5 +31,5 @@ $twig->addExtension(new \IcyMat\ApiDoc\Twig\JsonFormatterExtension());
 $docPath = __DIR__ . '/../../../../' . $destination . '/documentation.html';
 
 $f = fopen($docPath, 'w+');
-fputs($f, $twig->render('index.html.twig', ['docData' => $docData]));
+fputs($f, $twig->render('index.html.twig', ['documentation' => $docData]));
 fclose($f);

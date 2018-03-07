@@ -24,31 +24,33 @@
     </head>
     <body class="imd-body">
         <nav id="preview-navigation" class="imd-nav imd-nav-top imd-nav-fixed imd-nav-light">
-            <div class="imd-nav-container imd-bg-green imd-text-white">
+            <div class="imd-nav-container imd-bg-blue imd-text-white">
                 <span class="imd-nav-brand">
                     <a href="#" class="imd-text-white">
                         IcyMat API Documentation
                     </a>
                 </span>
 
-                <ul class="imd-nav-menu">
-                    <li>
-                        <a href="#navigation-elements" class="imd-text-white imd-active">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#navigation-elements" class="imd-text-white">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#navigation-elements" class="imd-text-white">Link 3</a>
-                    </li>
+                <ul class="imd-nav-menu" style="float: right;">
+                    {% for slug, section in documentation %}
+                        <li>
+                            <a href="#{{ slug }}" class="imd-text-white">{{ section.section.name }}</a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         </nav>
 
-        <div class="imd-container">
-            {% for file in docData %}
+        {% for slug, section in documentation %}
+            <div class="imd-container" id="{{ slug }}">
                 <div class="imd-row">
-                    {% for method in file %}
+                    <div class="imd-col-xs">
+                        <h1>{{ section.section.name }}</h1>
+                    </div>
+                </div>
+
+                <div class="imd-row">
+                    {% for method in section.methods %}
                         {% set color = 'blue' %}
                         {% if method.methods[0] == 'POST' %}
                             {% set color = 'green' %}
@@ -112,8 +114,8 @@
                         </div>
                     {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
 
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
