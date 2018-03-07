@@ -105,7 +105,7 @@
                                     <h2>Responses</h2>
                                     {% for res in method.response %}
                                         <h3>{{ res.description }}</h3>
-                                        <pre>{{ res.response }}</pre>
+                                        <pre>{{ res.response|jsonFormatter }}</pre>
                                     {% endfor %}
                                 {% endif %}
                             </div>

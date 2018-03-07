@@ -17,6 +17,12 @@ abstract class ApiResponse implements ParserInterface
     private static function parseParameters($parameters)
     {
         $parameters = explode(', ', $parameters);
+
+        $parameters = [
+        	array_shift($parameters),
+			implode(', ', $parameters)
+		];
+
         $result = [
             'description' => null,
             'response' => null
@@ -25,10 +31,10 @@ abstract class ApiResponse implements ParserInterface
         foreach ($parameters as $parameter) {
             $parameter = explode('=', $parameter);
 
-            if ($parameter[0] == 'response') {
-				$result[$parameter[0]] = substr($parameter[1], 1, strlen($parameter[1]) - 2);
-			} else {
-				$result[$parameter[0]] = json_decode($parameter[1]);
+            if ($parameter[0] == 'description') {
+				$result['description'] = json_decode($parameter[1]);
+			} else if ($parameter[0] == 'response') {
+				$result['response'] = substr($parameter[1], 1, strlen($parameter[1]) - 2);
 			}
         }
 
