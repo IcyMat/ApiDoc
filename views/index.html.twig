@@ -83,7 +83,13 @@
                                 </table>
                             {% endif %}
 
-                            <pre>{{ method.response }}</pre>
+                            {% if method.response|length > 0 %}
+                                <h2>Responses</h2>
+                                {% for res in method.response %}
+                                    <h3>{{ res.description }}</h3>
+                                    <pre>{{ res.response }}</pre>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>
