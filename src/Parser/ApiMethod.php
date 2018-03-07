@@ -4,29 +4,29 @@ namespace IcyMat\ApiDoc\Parser;
 
 use IcyMat\ApiDoc\Interfaces\ParserInterface;
 
-abstract class ApiRoute implements ParserInterface
+abstract class ApiMethod implements ParserInterface
 {
     public static function parseLine($line)
     {
-        $line = explode('ApiRoute(', $line);
+        $line = explode('ApiMethod(', $line);
         $line = substr($line[1], 0, strlen($line[1]) - 1);
 
-        $parameters = self::parseParameters($line);
+        $method = self::parseParameters($line);
 
-        return $parameters['name'];
+        return $method['method'];
     }
 
     private static function parseParameters($parameters)
     {
         $parameters = explode(', ', $parameters);
         $result = [
-            'name' => null
+            'method' => 'GET'
         ];
 
         foreach ($parameters as $parameter) {
             $parameter = explode('=', $parameter);
 
-            $result[$parameter[0]] = json_decode($parameter[1]);
+            $result[$parameter[0]] = strtoupper(json_decode($parameter[1]));
         }
 
         return $result;
