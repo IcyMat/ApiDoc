@@ -31,8 +31,6 @@ class DocReader
             }
         }
 
-        print_r($comments); die;
-
         return $comments;
     }
 

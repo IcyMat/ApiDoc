@@ -3,7 +3,7 @@
 namespace IcyMat\ApiDoc;
 
 use IcyMat\ApiDoc\Parser\ApiDescription;
-use IcyMat\ApiDoc\Parser\ApiMethods;
+use IcyMat\ApiDoc\Parser\ApiMethod;
 use IcyMat\ApiDoc\Parser\ApiParams;
 use IcyMat\ApiDoc\Parser\ApiRoute;
 
@@ -40,12 +40,14 @@ class CommentParser
         return $line;
     }
 
-    private function cleanLine($line)
+    private function cleanLine($line) : string
     {
         $line = trim($line);
 
+        if (strlen($line) == 0) return '';
+
         $textStartPosition = 0;
-        while ($line[$textStartPosition] == ' ' || $line[$textStartPosition] == "\t" || $line[$textStartPosition] == '*') {
+        while ($textStartPosition < strlen($line) && ($line[$textStartPosition] == ' ' || $line[$textStartPosition] == "\t" || $line[$textStartPosition] == '*')) {
             $textStartPosition++;
         }
 
@@ -64,11 +66,11 @@ class CommentParser
                     'method' => 'write'
                 ];
 
-            case '@ApiMethods':
+            case '@ApiMethod':
                 return [
                     'key' => 'methods',
-                    'value' => ApiMethods::parseLine($line),
-                    'method' => 'write'
+                    'value' => ApiMethod::parseLine($line),
+                    'method' => 'append'
                 ];
 
             case '@ApiParams':
