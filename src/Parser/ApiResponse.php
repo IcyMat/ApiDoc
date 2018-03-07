@@ -38,6 +38,8 @@ abstract class ApiResponse implements ParserInterface
 			}
         }
 
+		$result['response'] = str_replace("'", '"', $result['response']);
+
         return $result;
     }
 }
