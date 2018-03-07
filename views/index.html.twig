@@ -5,9 +5,25 @@
         <title>IcyMat API Documentation</title>
 
         <link rel="stylesheet" href="https://secure.icymat.pl/cdn/icymat-design.css">
+        <style type="text/css">
+            .imd-container {
+                margin-top: 76px;
+            }
+
+            .imd-notification {
+                cursor: pointer;
+            }
+
+            .details {
+                border-bottom: 1px solid #333;
+                margin-bottom: 50px;
+                padding-bottom: 50px;
+                display: none;
+            }
+        </style>
     </head>
     <body class="imd-body">
-        <nav id="preview-navigation" class="imd-nav imd-nav-top imd-nav-light">
+        <nav id="preview-navigation" class="imd-nav imd-nav-top imd-nav-fixed imd-nav-light">
             <div class="imd-nav-container imd-bg-green imd-text-white">
                 <span class="imd-nav-brand">
                     <a href="#" class="imd-text-white">
@@ -35,7 +51,7 @@
                     {% for method in file %}
                         {% set color = 'blue' %}
                         {% if method.methods[0] == 'POST' %}
-                            {% set color = 'yellow' %}
+                            {% set color = 'green' %}
                         {% endif %}
 
                         <div class="imd-col-12">
@@ -43,53 +59,56 @@
                                 <strong>{{ method.methods[0] }}</strong> {{ method.route }}
                             </div>
 
-                            <p>{{ method.description.description }}</p>
+                            <div class="details">
+                                <h2>Description</h2>
+                                <p>{{ method.description.description }}</p>
 
-                            {% if method.parameters|length > 0 %}
-                                <h2>Parameters</h2>
-                                <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Nullable</th>
-                                        <th>Required</th>
-                                        <th>Description</th>
-                                    </tr>
-                                    {% for parameter in method.parameters %}
+                                {% if method.parameters|length > 0 %}
+                                    <h2>Parameters</h2>
+                                    <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
                                         <tr>
-                                            <td>{{ parameter.name }}</td>
-                                            <td>{{ parameter.type }}</td>
-                                            {% if parameter.nullable %}
-                                                <td class="imd-text-green">
-                                                    <span class="imd-icon imd-icon-checkmark"></span>
-                                                </td>
-                                            {% else %}
-                                                <td class="imd-text-red">
-                                                    <span class="imd-icon imd-icon-cross"></span>
-                                                </td>
-                                            {% endif %}
-                                            {% if parameter.required %}
-                                                <td class="imd-text-green">
-                                                    <span class="imd-icon imd-icon-checkmark"></span>
-                                                </td>
-                                            {% else %}
-                                                <td class="imd-text-red">
-                                                    <span class="imd-icon imd-icon-cross"></span>
-                                                </td>
-                                            {% endif %}
-                                            <td>{{ parameter.description }}</td>
+                                            <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Nullable</th>
+                                            <th>Required</th>
+                                            <th>Description</th>
                                         </tr>
-                                    {% endfor %}
-                                </table>
-                            {% endif %}
+                                        {% for parameter in method.parameters %}
+                                            <tr>
+                                                <td>{{ parameter.name }}</td>
+                                                <td>{{ parameter.type }}</td>
+                                                {% if parameter.nullable %}
+                                                    <td class="imd-text-green">
+                                                        <span class="imd-icon imd-icon-checkmark"></span>
+                                                    </td>
+                                                {% else %}
+                                                    <td class="imd-text-red">
+                                                        <span class="imd-icon imd-icon-cross"></span>
+                                                    </td>
+                                                {% endif %}
+                                                {% if parameter.required %}
+                                                    <td class="imd-text-green">
+                                                        <span class="imd-icon imd-icon-checkmark"></span>
+                                                    </td>
+                                                {% else %}
+                                                    <td class="imd-text-red">
+                                                        <span class="imd-icon imd-icon-cross"></span>
+                                                    </td>
+                                                {% endif %}
+                                                <td>{{ parameter.description }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                {% endif %}
 
-                            {% if method.response|length > 0 %}
-                                <h2>Responses</h2>
-                                {% for res in method.response %}
-                                    <h3>{{ res.description }}</h3>
-                                    <pre>{{ res.response }}</pre>
-                                {% endfor %}
-                            {% endif %}
+                                {% if method.response|length > 0 %}
+                                    <h2>Responses</h2>
+                                    {% for res in method.response %}
+                                        <h3>{{ res.description }}</h3>
+                                        <pre>{{ res.response }}</pre>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -101,5 +120,13 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://secure.icymat.pl/cdn/icymat-design.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('.imd-notification').click(function() {
+                    $('.details.show').slideUp();
+                    $(this).siblings('.details').addClass('show').slideDown();
+                });
+            });
+        </script>
     </body>
 </html>
