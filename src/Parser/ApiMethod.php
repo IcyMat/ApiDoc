@@ -17,12 +17,24 @@ abstract class ApiMethod implements ParserInterface
      */
     public static function parseLine($line)
     {
-        $line = explode('ApiMethod(', $line);
-        $line = substr($line[1], 0, strlen($line[1]) - 2);
+        $lines = explode('@ApiMethod', $line);
+        $methods = [];
 
-        $method = self::parseParameters($line);
+        foreach ($lines as $line) {
+            $line = trim($line);
+            $line = substr($line, 1, strlen($line) - 2);
+            $method = self::parseParameters($line);
 
-        return $method['method'];
+            if ($method !== null) {
+                $methods[] = $method;
+            }
+        }
+
+        if (count($methods) == 0) {
+            return null;
+        }
+
+        return $methods;
     }
 
     /**
@@ -31,17 +43,26 @@ abstract class ApiMethod implements ParserInterface
      */
     private static function parseParameters($parameters)
     {
-        $parameters = explode(', ', $parameters);
-        $result = [
-            'method' => 'GET'
-        ];
+        $parameters = str_replace('="', ':"', $parameters);
+        $parameters = self::createJson($parameters);
+        $parameters = json_decode($parameters, true);
 
-        foreach ($parameters as $parameter) {
-            $parameter = explode('=', $parameter);
-
-            $result[$parameter[0]] = strtoupper(json_decode($parameter[1]));
+        if (isset($parameters['method'])) {
+            return $parameters['method'];
         }
 
-        return $result;
+        return null;
+    }
+
+    /**
+     * @param $json
+     * @return string
+     */
+    private static function createJson($json): string
+    {
+        $json = str_replace("'", '"', $json);
+        $json = preg_replace('/(\w+):/i', '"\1":', $json);
+
+        return sprintf('{%s}', $json);
     }
 }

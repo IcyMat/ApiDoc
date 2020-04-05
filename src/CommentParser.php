@@ -15,138 +15,138 @@ class CommentParser
      * @return array
      */
     public function parseComment(array $comment) : array
-	{
-		$resultData = [];
+    {
+        $resultData = [];
 
-		foreach ($comment as $line) {
-			$line = $this->parseLine($line);
-			if ($line != '') {
-				$resultData[] = $line;
-			}
-		}
+        foreach ($comment as $line) {
+            $line = $this->parseLine($line);
+            if ($line != '') {
+                $resultData[] = $line;
+            }
+        }
 
-		if (count($resultData) == 0) {
-			return [];
-		}
+        if (count($resultData) == 0) {
+            return [];
+        }
 
-		$resultData = $this->concatenateMultiLineAnnotation($resultData);
+        $resultData = $this->concatenateMultiLineAnnotation($resultData);
         $doc = $this->createDocArrayFromComments($resultData);
 
         if ($doc === null) {
             return [];
         }
 
-		return $doc;
-	}
+        return $doc;
+    }
 
     /**
      * @param $line
      * @return string
      */
     public function parseLine($line)
-	{
-		$line = $this->cleanLine($line);
+    {
+        $line = $this->cleanLine($line);
 
-		return $line;
-	}
+        return $line;
+    }
 
     /**
      * @param $line
      * @return string
      */
     private function cleanLine($line) : string
-	{
-		$line = trim($line);
+    {
+        $line = trim($line);
 
-		if (strlen($line) == 0) return '';
+        if (strlen($line) == 0) return '';
 
-		$textStartPosition = 0;
-		while ($textStartPosition < strlen($line) && ($line[$textStartPosition] == ' ' || $line[$textStartPosition] == "\t" || $line[$textStartPosition] == '*')) {
-			$textStartPosition++;
-		}
+        $textStartPosition = 0;
+        while ($textStartPosition < strlen($line) && ($line[$textStartPosition] == ' ' || $line[$textStartPosition] == "\t" || $line[$textStartPosition] == '*')) {
+            $textStartPosition++;
+        }
 
-		return substr($line, $textStartPosition, strlen($line) - 1);
-	}
+        return substr($line, $textStartPosition, strlen($line) - 1);
+    }
 
     /**
      * @param array $comments
      * @return array|null
      */
     private function createDocArrayFromComments(array $comments): ?array
-	{
-		$resultData = [
-			'route' => null,
-			'methods' => null,
-			'description' => null,
-			'response' => [],
-			'parameters' => []
-		];
+    {
+        $resultData = [
+            'route' => null,
+            'methods' => null,
+            'description' => null,
+            'response' => [],
+            'parameters' => []
+        ];
 
-		$annotationParser = new AnnotationParser();
+        $annotationParser = new AnnotationParser();
 
-		foreach ($comments as $line) {
-			if ($line[0] == '@') {
-				$dynamicValue = $annotationParser->parseAnnotationLine($line);
+        foreach ($comments as $line) {
+            if ($line[0] == '@') {
+                $dynamicValue = $annotationParser->parseAnnotationLine($line);
 
-				if ($dynamicValue === null) {
-				    continue;
+                if ($dynamicValue === null) {
+                    continue;
                 }
 
-				if ($dynamicValue['method'] == 'write') {
-					$resultData[$dynamicValue['key']] = $dynamicValue['value'];
-				} else if ($dynamicValue['method'] == 'append') {
-					$resultData[$dynamicValue['key']][] = $dynamicValue['value'];
-				}
-			} else if ($resultData['description'] !== null) {
-				$resultData['description'] .= $line;
-			}
-		}
-
-		if ($resultData['route'] == null) {
-		    return null;
+                if ($dynamicValue['method'] == 'write') {
+                    $resultData[$dynamicValue['key']] = $dynamicValue['value'];
+                } else if ($dynamicValue['method'] == 'append') {
+                    $resultData[$dynamicValue['key']][] = $dynamicValue['value'];
+                }
+            } else if ($resultData['description'] !== null) {
+                $resultData['description'] .= $line;
+            }
         }
 
-		return $resultData;
-	}
+        if ($resultData['route'] == null) {
+            return null;
+        }
+
+        return $resultData;
+    }
 
     /**
      * @param $resultData
      * @return array
      */
     private function concatenateMultiLineAnnotation($resultData) : array
-	{
-		$newArray = [];
-		$newIndex = 0;
+    {
+        $newArray = [];
+        $newIndex = 0;
 
-		$inObject = false;
-		foreach ($resultData as $line) {
-			if ($line[0] === '@') {
-				$newArray[$newIndex] = stripslashes($line);
+        $inObject = false;
+        foreach ($resultData as $line) {
+            if ($line[0] === '@') {
+                $newArray[$newIndex] = stripslashes($line);
 
-				if ($line[strlen($line) - 1] !== ')') {
-					$inObject = true;
-					continue;
-				}
-			}
+                if ($line[strlen($line) - 1] !== ')') {
+                    $inObject = true;
+                    continue;
+                }
+            }
 
-			if ($inObject) {
-				$newArray[$newIndex] .= stripslashes($line);
+            if ($inObject) {
+                $newArray[$newIndex] .= stripslashes($line);
 
-				if ($line[strlen($line) - 1] == ')') {
-					$newIndex++;
-					$inObject = false;
-				}
+                if ($line[strlen($line) - 1] == ')') {
+                    $newIndex++;
+                    $inObject = false;
+                }
 
-				continue;
-			}
+                continue;
+            }
 
-			$newArray[$newIndex] = stripslashes($line);
+            $newArray[$newIndex] = stripslashes($line);
 
-			if (!$inObject) {
-				$newIndex++;
-			}
-		}
+            if (!$inObject) {
+                $newIndex++;
+            }
+        }
 
-		return $newArray;
-	}
+        return $newArray;
+    }
 }

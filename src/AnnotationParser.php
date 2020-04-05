@@ -20,46 +20,46 @@ class AnnotationParser
      * @return array|null
      */
     public function parseAnnotationLine(string $line): ?array
-	{
-		$type = explode('(', $line);
+    {
+        $type = explode('(', $line);
 
-		switch ($type[0]) {
-			case '@ApiRoute':
-				return [
-					'key' => 'route',
-					'value' => ApiRoute::parseLine($line),
-					'method' => 'write'
-				];
+        switch ($type[0]) {
+            case '@ApiRoute':
+                return [
+                    'key' => 'route',
+                    'value' => ApiRoute::parseLine($line),
+                    'method' => 'write'
+                ];
 
-			case '@ApiMethod':
-				return [
-					'key' => 'methods',
-					'value' => ApiMethod::parseLine($line),
-					'method' => 'append'
-				];
+            case '@ApiMethod':
+                return [
+                    'key' => 'methods',
+                    'value' => ApiMethod::parseLine($line),
+                    'method' => 'write'
+                ];
 
-			case '@ApiParams':
-				return [
-					'key' => 'parameters',
-					'value' => ApiParams::parseLine($line),
-					'method' => 'append'
-				];
+            case '@ApiParams':
+                return [
+                    'key' => 'parameters',
+                    'value' => ApiParams::parseLine($line),
+                    'method' => 'append'
+                ];
 
-			case '@ApiDescription':
-				return [
-					'key' => 'description',
-					'value' => ApiDescription::parseLine($line),
-					'method' => 'write'
-				];
+            case '@ApiDescription':
+                return [
+                    'key' => 'description',
+                    'value' => ApiDescription::parseLine($line),
+                    'method' => 'write'
+                ];
 
-			case '@ApiResponse':
-				return [
-					'key' => 'response',
-					'value' => ApiResponse::parseLine($line),
-					'method' => 'append'
-				];
-		}
+            case '@ApiResponse':
+                return [
+                    'key' => 'response',
+                    'value' => ApiResponse::parseLine($line),
+                    'method' => 'append'
+                ];
+        }
 
-		return null;
-	}
+        return null;
+    }
 }
