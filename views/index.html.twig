@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>IcyMat API Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://secure.icymat.pl/cdn/icymat-design.css">
         <style type="text/css">
@@ -76,40 +77,42 @@
 
                                 {% if method.parameters|length > 0 %}
                                     <h2>Parameters</h2>
-                                    <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Type</th>
-                                            <th>Nullable</th>
-                                            <th>Required</th>
-                                            <th>Description</th>
-                                        </tr>
-                                        {% for parameter in method.parameters %}
+                                    <div class="imd-table-responsive">
+                                        <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
                                             <tr>
-                                                <td>{{ parameter.name }}</td>
-                                                <td>{{ parameter.type }}</td>
-                                                {% if parameter.nullable %}
-                                                    <td class="imd-text-green">
-                                                        ✔
-                                                    </td>
-                                                {% else %}
-                                                    <td class="imd-text-red">
-                                                        ✗
-                                                    </td>
-                                                {% endif %}
-                                                {% if parameter.required %}
-                                                    <td class="imd-text-green">
-                                                        ✔
-                                                    </td>
-                                                {% else %}
-                                                    <td class="imd-text-red">
-                                                        ✗
-                                                    </td>
-                                                {% endif %}
-                                                <td>{{ parameter.description }}</td>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Nullable</th>
+                                                <th>Required</th>
+                                                <th>Description</th>
                                             </tr>
-                                        {% endfor %}
-                                    </table>
+                                            {% for parameter in method.parameters %}
+                                                <tr>
+                                                    <td>{{ parameter.name }}</td>
+                                                    <td>{{ parameter.type }}</td>
+                                                    {% if parameter.nullable %}
+                                                        <td class="imd-text-green">
+                                                            ✔
+                                                        </td>
+                                                    {% else %}
+                                                        <td class="imd-text-red">
+                                                            ✗
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if parameter.required %}
+                                                        <td class="imd-text-green">
+                                                            ✔
+                                                        </td>
+                                                    {% else %}
+                                                        <td class="imd-text-red">
+                                                            ✗
+                                                        </td>
+                                                    {% endif %}
+                                                    <td>{{ parameter.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
                                 {% endif %}
 
                                 {% if method.response|length > 0 %}
