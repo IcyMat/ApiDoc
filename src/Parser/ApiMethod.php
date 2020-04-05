@@ -18,7 +18,7 @@ abstract class ApiMethod implements ParserInterface
     public static function parseLine($line)
     {
         $line = explode('ApiMethod(', $line);
-        $line = substr($line[1], 0, strlen($line[1]) - 1);
+        $line = substr($line[1], 0, strlen($line[1]) - 2);
 
         $method = self::parseParameters($line);
 
