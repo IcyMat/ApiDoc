@@ -29,60 +29,23 @@ abstract class ApiParams implements ParserInterface
      */
     private static function parseParameters($parameters)
     {
-        $parameters = explode(', ', $parameters);
-        $result = [
-            'name' => null,
-            'type' => null,
-            'nullable' => false,
-            'description' => '',
-            'required' => true
-        ];
+        $parameters = str_replace('="', ':"', $parameters);
+        $parameters = str_replace('=false', ':false', $parameters);
+        $parameters = str_replace('=true', ':true', $parameters);
+        $parameters = self::createJson($parameters);
 
-        foreach ($parameters as $parameter) {
-            $parameter = explode('=', $parameter);
-
-            if ($parameter[0] == 'type') {
-                $result[$parameter[0]] = self::parseType($parameter[1]);
-            } else if ($parameter[0] == 'nullable' || $parameter[0] == 'required') {
-                $result[$parameter[0]] = self::parseBoolean($parameter[1]);
-            } else {
-                $result[$parameter[0]] = json_decode($parameter[1]);
-            }
-        }
-
-        return $result;
+        return json_decode($parameters, true);
     }
 
     /**
-     * @param $type
-     * @return string|string[]
+     * @param $json
+     * @return string
      */
-    private static function parseType($type) {
-        $type = str_replace('"', '', $type);
-        $type = str_replace("'", '', $type);
+    private static function createJson($json): string
+    {
+        $json = str_replace("'", '"', $json);
+        $json = preg_replace('/(\w+):/i', '"\1":', $json);
 
-        switch ($type) {
-            case 'int':
-            case 'integer':
-                return 'integer';
-
-            case 'bool':
-            case 'boolean':
-                return 'boolean';
-
-            default:
-                return $type;
-        }
-    }
-
-    /**
-     * @param $type
-     * @return bool
-     */
-    private static function parseBoolean($type) {
-        $type = str_replace('"', '', $type);
-        $type = str_replace("'", '', $type);
-
-        return $type == 'false' ? false : true;
+        return sprintf('{%s}', $json);
     }
 }

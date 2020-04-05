@@ -29,17 +29,21 @@ abstract class ApiDescription implements ParserInterface
      */
     private static function parseParameters($parameters)
     {
-        $parameters = explode(', ', $parameters);
-        $result = [
-            'section' => null,
-            'description' => null
-        ];
+        $parameters = str_replace('="', ':"', $parameters);
+        $parameters = self::createJson($parameters);
 
-        foreach ($parameters as $parameter) {
-            $parameter = explode('=', $parameter);
-            $result[$parameter[0]] = json_decode($parameter[1]);
-        }
+        return json_decode($parameters, true);
+    }
 
-        return $result;
+    /**
+     * @param $json
+     * @return string
+     */
+    private static function createJson($json): string
+    {
+        $json = str_replace("'", '"', $json);
+        $json = preg_replace('/(\w+):/i', '"\1":', $json);
+
+        return sprintf('{%s}', $json);
     }
 }
