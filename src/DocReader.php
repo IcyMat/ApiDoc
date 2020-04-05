@@ -39,9 +39,15 @@ class DocReader
         }
 
         $comments = [];
+        $methods = $reflectionClass->getMethods(
+            \ReflectionMethod::IS_PUBLIC |
+            \ReflectionMethod::IS_PROTECTED |
+            \ReflectionMethod::IS_PRIVATE
+        );
 
-        foreach (get_class_methods($className) as $methodName) {
-            $comment = $reflectionClass->getMethod($methodName)->getDocComment();
+        foreach ($methods as $method) {
+            echo "\t" . $method->getName() . "\n";
+            $comment = $reflectionClass->getMethod($method->getName())->getDocComment();
             $parsedComment = $this->parseCommentToArray($comment);
 
             if (count($parsedComment) > 0) {

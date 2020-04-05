@@ -22,6 +22,7 @@ class ApiDoc
         $docGenerator = new DocReader(new CommentParser());
         foreach ($files as $file) {
             try {
+                echo 'Analyze file: ' . $file . "\n";
                 $results = $docGenerator->getDocCommentsForFile($file);
 
                 if ($results !== null) {
