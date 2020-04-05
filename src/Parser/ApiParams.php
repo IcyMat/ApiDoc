@@ -4,8 +4,17 @@ namespace IcyMat\ApiDoc\Parser;
 
 use IcyMat\ApiDoc\Interfaces\ParserInterface;
 
+/**
+ * Class ApiParams
+ *
+ * @package IcyMat\ApiDoc\Parser
+ */
 abstract class ApiParams implements ParserInterface
 {
+    /**
+     * @param $line
+     * @return array|mixed
+     */
     public static function parseLine($line)
     {
         $line = explode('ApiParams(', $line);
@@ -14,6 +23,10 @@ abstract class ApiParams implements ParserInterface
         return self::parseParameters($line);
     }
 
+    /**
+     * @param $parameters
+     * @return array
+     */
     private static function parseParameters($parameters)
     {
         $parameters = explode(', ', $parameters);
@@ -40,6 +53,10 @@ abstract class ApiParams implements ParserInterface
         return $result;
     }
 
+    /**
+     * @param $type
+     * @return string|string[]
+     */
     private static function parseType($type) {
         $type = str_replace('"', '', $type);
         $type = str_replace("'", '', $type);
@@ -58,6 +75,10 @@ abstract class ApiParams implements ParserInterface
         }
     }
 
+    /**
+     * @param $type
+     * @return bool
+     */
     private static function parseBoolean($type) {
         $type = str_replace('"', '', $type);
         $type = str_replace("'", '', $type);

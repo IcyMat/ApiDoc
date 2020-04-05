@@ -4,8 +4,17 @@ namespace IcyMat\ApiDoc\Parser;
 
 use IcyMat\ApiDoc\Interfaces\ParserInterface;
 
+/**
+ * Class ApiDescription
+ *
+ * @package IcyMat\ApiDoc\Parser
+ */
 abstract class ApiDescription implements ParserInterface
 {
+    /**
+     * @param $line
+     * @return array|mixed
+     */
     public static function parseLine($line)
     {
         $line = explode('ApiDescription(', $line);
@@ -14,6 +23,10 @@ abstract class ApiDescription implements ParserInterface
         return self::parseParameters($line);
     }
 
+    /**
+     * @param $parameters
+     * @return array
+     */
     private static function parseParameters($parameters)
     {
         $parameters = explode(', ', $parameters);

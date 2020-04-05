@@ -2,16 +2,28 @@
 
 namespace IcyMat\ApiDoc\Twig;
 
+/**
+ * Class JsonFormatterExtension
+ *
+ * @package IcyMat\ApiDoc\Twig
+ */
 class JsonFormatterExtension extends \Twig_Extension
 {
-	public function getFilters()
+    /**
+     * @return array
+     */
+    public function getFilters()
 	{
 		return [
 			new \Twig_Filter('jsonFormatter', [$this, 'jsonFormatter'], ['is_safe' => ['html']])
 		];
 	}
 
-	public function jsonFormatter(string $jsonString) : string {
+    /**
+     * @param string $jsonString
+     * @return string
+     */
+    public function jsonFormatter(string $jsonString) : string {
 		$jsonData = json_decode($jsonString, true);
 
 		if ($jsonData === null) {
@@ -21,12 +33,20 @@ class JsonFormatterExtension extends \Twig_Extension
 		return $this->parseJson($jsonData);
 	}
 
-	public function getName()
+    /**
+     * @return string
+     */
+    public function getName()
 	{
 		return 'icymat_apidoc_json_formatter';
 	}
 
-	private function parseJson(array $jsonData, $tabSize = 4) : string
+    /**
+     * @param array $jsonData
+     * @param int $tabSize
+     * @return string
+     */
+    private function parseJson(array $jsonData, $tabSize = 4) : string
 	{
 		if ($this->arrayIsAssoc($jsonData)) {
 			$string = '{<br>';
@@ -72,7 +92,11 @@ class JsonFormatterExtension extends \Twig_Extension
 		}
 	}
 
-	private function arrayIsAssoc(array $arr) : bool
+    /**
+     * @param array $arr
+     * @return bool
+     */
+    private function arrayIsAssoc(array $arr) : bool
 	{
 		if (array() === $arr) return false;
 

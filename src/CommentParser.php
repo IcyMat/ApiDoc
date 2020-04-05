@@ -2,15 +2,19 @@
 
 namespace IcyMat\ApiDoc;
 
-use IcyMat\ApiDoc\Parser\ApiDescription;
-use IcyMat\ApiDoc\Parser\ApiMethod;
-use IcyMat\ApiDoc\Parser\ApiParams;
-use IcyMat\ApiDoc\Parser\ApiRoute;
-
+/**
+ * Class CommentParser
+ *
+ * @package IcyMat\ApiDoc
+ */
 class CommentParser
 {
 
-	public function parseComment(array $comment) : array
+    /**
+     * @param array $comment
+     * @return array
+     */
+    public function parseComment(array $comment) : array
 	{
 		$resultData = [];
 
@@ -30,14 +34,22 @@ class CommentParser
 		return $this->createDocArrayFromComments($resultData);
 	}
 
-	public function parseLine($line)
+    /**
+     * @param $line
+     * @return string
+     */
+    public function parseLine($line)
 	{
 		$line = $this->cleanLine($line);
 
 		return $line;
 	}
 
-	private function cleanLine($line) : string
+    /**
+     * @param $line
+     * @return string
+     */
+    private function cleanLine($line) : string
 	{
 		$line = trim($line);
 
@@ -51,7 +63,11 @@ class CommentParser
 		return substr($line, $textStartPosition, strlen($line) - 1);
 	}
 
-	private function createDocArrayFromComments(array $comments) : array
+    /**
+     * @param array $comments
+     * @return array
+     */
+    private function createDocArrayFromComments(array $comments) : array
 	{
 		$resultData = [
 			'route' => null,
@@ -80,7 +96,11 @@ class CommentParser
 		return $resultData;
 	}
 
-	private function concatenateMultiLineAnnotation($resultData) : array
+    /**
+     * @param $resultData
+     * @return array
+     */
+    private function concatenateMultiLineAnnotation($resultData) : array
 	{
 		$newArray = [];
 		$newIndex = 0;

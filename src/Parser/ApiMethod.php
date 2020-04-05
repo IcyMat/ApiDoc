@@ -4,8 +4,17 @@ namespace IcyMat\ApiDoc\Parser;
 
 use IcyMat\ApiDoc\Interfaces\ParserInterface;
 
+/**
+ * Class ApiMethod
+ *
+ * @package IcyMat\ApiDoc\Parser
+ */
 abstract class ApiMethod implements ParserInterface
 {
+    /**
+     * @param $line
+     * @return mixed
+     */
     public static function parseLine($line)
     {
         $line = explode('ApiMethod(', $line);
@@ -16,6 +25,10 @@ abstract class ApiMethod implements ParserInterface
         return $method['method'];
     }
 
+    /**
+     * @param $parameters
+     * @return array
+     */
     private static function parseParameters($parameters)
     {
         $parameters = explode(', ', $parameters);

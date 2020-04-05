@@ -2,8 +2,17 @@
 
 namespace IcyMat\ApiDoc;
 
+/**
+ * Class ApiDoc
+ *
+ * @package IcyMat\ApiDoc
+ */
 class ApiDoc
 {
+    /**
+     * @param $directory
+     * @return array
+     */
     public function generarteDoc($directory) : array
     {
         $files = $this->listDirectory($directory);
@@ -18,6 +27,11 @@ class ApiDoc
         return $docData;
     }
 
+    /**
+     * @param string $directory
+     * @param array $expectedExtensions
+     * @return array
+     */
     private function listDirectory(string $directory = '.', array $expectedExtensions = ['php']) : array
     {
         $result = [];

@@ -2,9 +2,18 @@
 
 namespace IcyMat\ApiDoc\Docs;
 
+/**
+ * Class DocumentationGenerator
+ *
+ * @package IcyMat\ApiDoc\Docs
+ */
 class DocumentationGenerator
 {
-	public function createDocData(array $data) : array
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function createDocData(array $data) : array
 	{
 		$docData = [];
 
@@ -35,7 +44,11 @@ class DocumentationGenerator
 		return $docData;
 	}
 
-	private function createSlug(string $name) : string
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function createSlug(string $name) : string
 	{
 		return str_replace(' ', '-', strtolower($name));
 	}

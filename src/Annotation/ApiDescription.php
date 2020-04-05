@@ -9,6 +9,13 @@ use IcyMat\ApiDoc\Interfaces\AnnotationInterface;
  */
 class ApiDescription implements AnnotationInterface
 {
+    /**
+     * @var null
+     */
     public $section = null;
+
+    /**
+     * @var string
+     */
     public $description = '';
 }

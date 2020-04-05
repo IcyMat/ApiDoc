@@ -4,8 +4,17 @@ namespace IcyMat\ApiDoc\Parser;
 
 use IcyMat\ApiDoc\Interfaces\ParserInterface;
 
+/**
+ * Class ApiRoute
+ *
+ * @package IcyMat\ApiDoc\Parser
+ */
 abstract class ApiRoute implements ParserInterface
 {
+    /**
+     * @param $line
+     * @return mixed
+     */
     public static function parseLine($line)
     {
         $line = explode('ApiRoute(', $line);
@@ -16,6 +25,10 @@ abstract class ApiRoute implements ParserInterface
         return $parameters['name'];
     }
 
+    /**
+     * @param $parameters
+     * @return array
+     */
     private static function parseParameters($parameters)
     {
         $parameters = explode(', ', $parameters);

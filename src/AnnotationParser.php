@@ -8,9 +8,18 @@ use IcyMat\ApiDoc\Parser\ApiParams;
 use IcyMat\ApiDoc\Parser\ApiResponse;
 use IcyMat\ApiDoc\Parser\ApiRoute;
 
+/**
+ * Class AnnotationParser
+ *
+ * @package IcyMat\ApiDoc
+ */
 class AnnotationParser
 {
-	public function parseAnnotationLine(string $line) : array
+    /**
+     * @param string $line
+     * @return array
+     */
+    public function parseAnnotationLine(string $line) : array
 	{
 		$type = explode('(', $line);
 

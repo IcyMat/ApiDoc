@@ -9,5 +9,8 @@ use IcyMat\ApiDoc\Interfaces\AnnotationInterface;
  */
 class ApiMethod implements AnnotationInterface
 {
+    /**
+     * @var array
+     */
     public $method = [];
 }

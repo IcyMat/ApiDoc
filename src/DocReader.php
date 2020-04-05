@@ -2,16 +2,34 @@
 
 namespace IcyMat\ApiDoc;
 
+/**
+ * Class DocReader
+ *
+ * @package IcyMat\ApiDoc
+ */
 class DocReader
 {
 
+    /**
+     * @var CommentParser
+     */
     private $commentParser;
 
+    /**
+     * DocReader constructor.
+     *
+     * @param CommentParser $commentParser
+     */
     public function __construct(CommentParser $commentParser)
     {
         $this->commentParser = $commentParser;
     }
 
+    /**
+     * @param $className
+     * @return array
+     * @throws \ReflectionException
+     */
     public function getDocCommentsForClass($className) : array
     {
         try {
@@ -34,6 +52,11 @@ class DocReader
         return $comments;
     }
 
+    /**
+     * @param $fileName
+     * @return array
+     * @throws \ReflectionException
+     */
     public function getDocCommentsForFile($fileName)
     {
         return $this->getDocCommentsForClass(
@@ -41,6 +64,10 @@ class DocReader
         );
     }
 
+    /**
+     * @param $comment
+     * @return array
+     */
     private function parseCommentToArray($comment) : array
     {
         $comment = explode("\n", $comment);
@@ -52,6 +79,10 @@ class DocReader
         return $comment;
     }
 
+    /**
+     * @param $fileName
+     * @return string
+     */
     private function getClassNameFromFile($fileName) : string
     {
         $file = fopen($fileName, 'r');
