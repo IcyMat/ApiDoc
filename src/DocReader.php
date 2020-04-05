@@ -45,7 +45,7 @@ class DocReader
             $parsedComment = $this->parseCommentToArray($comment);
 
             if (count($parsedComment) > 0) {
-                $comments[] = $this->parseCommentToArray($comment);
+                $comments[] = $parsedComment;
             }
         }
 
@@ -54,14 +54,18 @@ class DocReader
 
     /**
      * @param $fileName
-     * @return array
+     * @return array|null
      * @throws \ReflectionException
      */
-    public function getDocCommentsForFile($fileName)
+    public function getDocCommentsForFile($fileName): ?array
     {
-        return $this->getDocCommentsForClass(
-            $this->getClassNameFromFile($fileName)
-        );
+        $className = $this->getClassNameFromFile($fileName);
+
+        if ($className !== null) {
+            return $this->getDocCommentsForClass($className);
+        }
+
+        return null;
     }
 
     /**
@@ -74,9 +78,7 @@ class DocReader
         array_shift($comment);
         unset($comment[count($comment) - 1]);
 
-        $comment = $this->commentParser->parseComment($comment);
-
-        return $comment;
+        return $this->commentParser->parseComment($comment);
     }
 
     /**
@@ -87,7 +89,6 @@ class DocReader
     {
         $file = fopen($fileName, 'r');
         $namespace = null;
-        $objectName = null;
 
         if ($file !== false) {
             while (($line = fgets($file)) !== false) {
@@ -100,7 +101,11 @@ class DocReader
                     $namespace = str_replace(';', '', $line[1]);
                 }
 
-                if ($line[0] == 'class' || $line[0] == 'interface' || $line[0] == 'trait') {
+                if ($line[0] == 'class' || $line[0] == 'interface' || $line[0] == 'trait' || (count($line) > 1 && $line[1] == 'abstract')) {
+                    if ($line[1] == 'abstract') {
+                        return $namespace . '\\' .  $line[2];
+                    }
+
                     return $namespace . '\\' .  $line[1];
                 }
 

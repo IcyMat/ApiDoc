@@ -8,7 +8,7 @@ if (count($argv) == 1) {
 }
 
 if (count($argv) == 2) {
-    die("Destination path is required\n");
+    die("Destination directory path is required\n");
 }
 
 $resource = $argv[1];
@@ -24,8 +24,8 @@ if (!file_exists(__DIR__ . '/../../../../' . $destination)) {
     mkdir(__DIR__ . '/../../../../' . $destination);
 }
 
-$loader = new \Twig_Loader_Filesystem(__DIR__ . '/../views');
-$twig = new \Twig_Environment($loader);
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
+$twig = new \Twig\Environment($loader);
 $twig->addExtension(new \IcyMat\ApiDoc\Twig\JsonFormatterExtension());
 
 $docPath = __DIR__ . '/../../../../' . $destination . '/documentation.html';

@@ -7,7 +7,7 @@ namespace IcyMat\ApiDoc\Twig;
  *
  * @package IcyMat\ApiDoc\Twig
  */
-class JsonFormatterExtension extends \Twig_Extension
+class JsonFormatterExtension extends \Twig\Extension\AbstractExtension
 {
     /**
      * @return array
@@ -15,7 +15,7 @@ class JsonFormatterExtension extends \Twig_Extension
     public function getFilters()
 	{
 		return [
-			new \Twig_Filter('jsonFormatter', [$this, 'jsonFormatter'], ['is_safe' => ['html']])
+			new \Twig\TwigFilter('jsonFormatter', [$this, 'jsonFormatter'], ['is_safe' => ['html']])
 		];
 	}
 

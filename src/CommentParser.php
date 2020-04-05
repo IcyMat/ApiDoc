@@ -30,8 +30,13 @@ class CommentParser
 		}
 
 		$resultData = $this->concatenateMultiLineAnnotation($resultData);
+        $doc = $this->createDocArrayFromComments($resultData);
 
-		return $this->createDocArrayFromComments($resultData);
+        if ($doc === null) {
+            return [];
+        }
+
+		return $doc;
 	}
 
     /**
@@ -65,9 +70,9 @@ class CommentParser
 
     /**
      * @param array $comments
-     * @return array
+     * @return array|null
      */
-    private function createDocArrayFromComments(array $comments) : array
+    private function createDocArrayFromComments(array $comments): ?array
 	{
 		$resultData = [
 			'route' => null,
@@ -83,15 +88,23 @@ class CommentParser
 			if ($line[0] == '@') {
 				$dynamicValue = $annotationParser->parseAnnotationLine($line);
 
+				if ($dynamicValue === null) {
+				    continue;
+                }
+
 				if ($dynamicValue['method'] == 'write') {
 					$resultData[$dynamicValue['key']] = $dynamicValue['value'];
 				} else if ($dynamicValue['method'] == 'append') {
 					$resultData[$dynamicValue['key']][] = $dynamicValue['value'];
 				}
-			} else {
+			} else if ($resultData['description'] !== null) {
 				$resultData['description'] .= $line;
 			}
 		}
+
+		if ($resultData['route'] == null) {
+		    return null;
+        }
 
 		return $resultData;
 	}

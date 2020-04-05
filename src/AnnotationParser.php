@@ -17,9 +17,9 @@ class AnnotationParser
 {
     /**
      * @param string $line
-     * @return array
+     * @return array|null
      */
-    public function parseAnnotationLine(string $line) : array
+    public function parseAnnotationLine(string $line): ?array
 	{
 		$type = explode('(', $line);
 
@@ -60,10 +60,6 @@ class AnnotationParser
 				];
 		}
 
-		return [
-			'key' => '',
-			'value' => null,
-			'method' => null
-		];
+		return null;
 	}
 }

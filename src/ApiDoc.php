@@ -21,7 +21,15 @@ class ApiDoc
 
         $docGenerator = new DocReader(new CommentParser());
         foreach ($files as $file) {
-            $docData[] = $docGenerator->getDocCommentsForFile($file);
+            try {
+                $results = $docGenerator->getDocCommentsForFile($file);
+
+                if ($results !== null) {
+                    $docData[] = $results;
+                }
+            } catch (\ReflectionException $exception) {
+                continue;
+            }
         }
 
         return $docData;
@@ -44,7 +52,7 @@ class ApiDoc
                 if ($file == '.' || $file == '..' || $file[0] == '.') {
                     continue;
                 } else if (is_dir($directory . '/' . $file)) {
-                    $result[] = $this->listDirectory($directory . '/' . $file);
+                    $result = array_merge($result, $this->listDirectory($directory . '/' . $file));
                 } else {
                     $fileExtension = explode('.', $file);
                     $fileExtension = end($fileExtension);
