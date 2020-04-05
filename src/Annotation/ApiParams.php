@@ -10,12 +10,12 @@ use IcyMat\ApiDoc\Interfaces\AnnotationInterface;
 class ApiParams implements AnnotationInterface
 {
     /**
-     * @var null
+     * @var string
      */
     public $name = null;
 
     /**
-     * @var null
+     * @var string
      */
     public $type = null;
 

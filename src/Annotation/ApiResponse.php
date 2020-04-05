@@ -10,12 +10,12 @@ use IcyMat\ApiDoc\Interfaces\AnnotationInterface;
 class ApiResponse implements AnnotationInterface
 {
     /**
-     * @var null
+     * @var string
      */
     public $description = null;
 
     /**
-     * @var null
+     * @var string
      */
     public $response = null;
 }

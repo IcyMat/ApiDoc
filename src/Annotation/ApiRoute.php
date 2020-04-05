@@ -10,7 +10,7 @@ use IcyMat\ApiDoc\Interfaces\AnnotationInterface;
 class ApiRoute implements AnnotationInterface
 {
     /**
-     * @var null
+     * @var string
      */
     public $name = null;
 }

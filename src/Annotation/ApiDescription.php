@@ -10,7 +10,7 @@ use IcyMat\ApiDoc\Interfaces\AnnotationInterface;
 class ApiDescription implements AnnotationInterface
 {
     /**
-     * @var null
+     * @var string
      */
     public $section = null;
 
