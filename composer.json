@@ -15,8 +15,8 @@
     }
   ],
   "require": {
-    "php": "^7.0",
-    "twig/twig": "~2.4"
+    "php": "^7.2",
+    "twig/twig": "^2.0|^3.0"
   },
   "require-dev": {},
   "conflict": {},
@@ -27,6 +27,6 @@
   },
   "bin": ["bin/api_docs_generator"],
   "support": {
-    "docs": "https://secure.icymat.pl/dev/contact.html"
+    "docs": "https://mateuszkolasa.com/#contact"
   }
 }
