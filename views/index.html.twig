@@ -72,6 +72,36 @@
                             </div>
 
                             <div class="details">
+                                {% if method.route_parameters|length > 0 %}
+                                    <h2>Route parameters</h2>
+                                    <div class="imd-table-responsive">
+                                        <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Required</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            {% for parameter in method.parameters %}
+                                                <tr>
+                                                    <td>{{ parameter.name }}</td>
+                                                    <td>{{ parameter.type }}</td>
+                                                    {% if parameter.required %}
+                                                        <td class="imd-text-green">
+                                                            ✔
+                                                        </td>
+                                                    {% else %}
+                                                        <td class="imd-text-red">
+                                                            ✗
+                                                        </td>
+                                                    {% endif %}
+                                                    <td>{{ parameter.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                {% endif %}
+
                                 <h2>Description</h2>
                                 <p>{{ method.description.description }}</p>
 

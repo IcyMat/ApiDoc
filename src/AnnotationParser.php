@@ -7,6 +7,7 @@ use IcyMat\ApiDoc\Parser\ApiMethod;
 use IcyMat\ApiDoc\Parser\ApiParams;
 use IcyMat\ApiDoc\Parser\ApiResponse;
 use IcyMat\ApiDoc\Parser\ApiRoute;
+use IcyMat\ApiDoc\Parser\ApiRouteParams;
 
 /**
  * Class AnnotationParser
@@ -29,6 +30,13 @@ class AnnotationParser
                     'key' => 'route',
                     'value' => ApiRoute::parseLine($line),
                     'method' => 'write'
+                ];
+
+            case '@ApiRouteParams':
+                return [
+                    'key' => 'route_parameters',
+                    'value' => ApiRouteParams::parseLine($line),
+                    'method' => 'append'
                 ];
 
             case '@ApiMethod':

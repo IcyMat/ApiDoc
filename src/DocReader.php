@@ -89,9 +89,9 @@ class DocReader
 
     /**
      * @param $fileName
-     * @return string
+     * @return null|string
      */
-    private function getClassNameFromFile($fileName) : string
+    private function getClassNameFromFile($fileName) : ?string
     {
         $file = fopen($fileName, 'r');
         $namespace = null;
