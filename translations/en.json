@@ -1,0 +1,14 @@
+{
+  "title": "IcyMat API Documentation",
+  "route_parameters": "Route parameters",
+  "property": {
+    "name": "Name",
+    "type": "Type",
+    "required": "Required",
+    "description": "Description",
+    "nullable": "Nullable"
+  },
+  "description": "Description",
+  "responses": "Responses",
+  "parameters": "Parameters"
+}

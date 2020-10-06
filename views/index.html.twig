@@ -28,7 +28,7 @@
             <div class="imd-nav-container imd-bg-blue imd-text-white">
                 <span class="imd-nav-brand">
                     <a href="#" class="imd-text-white">
-                        IcyMat API Documentation
+                        {{ trans.title }}
                     </a>
                 </span>
 
@@ -73,14 +73,14 @@
 
                             <div class="details">
                                 {% if method.route_parameters|length > 0 %}
-                                    <h2>Route parameters</h2>
+                                    <h2>{{ trans.route_parameters }}</h2>
                                     <div class="imd-table-responsive">
                                         <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Type</th>
-                                                <th>Required</th>
-                                                <th>Description</th>
+                                                <th>{{ trans.property.name }}</th>
+                                                <th>{{ trans.property.type }}</th>
+                                                <th>{{ trans.property.required }}</th>
+                                                <th>{{ trans.property.description }}</th>
                                             </tr>
                                             {% for parameter in method.route_parameters %}
                                                 <tr>
@@ -102,19 +102,19 @@
                                     </div>
                                 {% endif %}
 
-                                <h2>Description</h2>
+                                <h2>{{ trans.description }}</h2>
                                 <p>{{ method.description.description }}</p>
 
                                 {% if method.parameters|length > 0 %}
-                                    <h2>Parameters</h2>
+                                    <h2>{{ trans.parameters }}</h2>
                                     <div class="imd-table-responsive">
                                         <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Type</th>
-                                                <th>Nullable</th>
-                                                <th>Required</th>
-                                                <th>Description</th>
+                                                <th>{{ trans.property.name }}</th>
+                                                <th>{{ trans.property.type }}</th>
+                                                <th>{{ trans.property.nullable }}</th>
+                                                <th>{{ trans.property.required }}</th>
+                                                <th>{{ trans.property.description }}</th>
                                             </tr>
                                             {% for parameter in method.parameters %}
                                                 <tr>
@@ -146,7 +146,7 @@
                                 {% endif %}
 
                                 {% if method.response|length > 0 %}
-                                    <h2>Responses</h2>
+                                    <h2>{{ trans.responses }}</h2>
                                     {% for res in method.response %}
                                         <h3>{{ res.description }}</h3>
                                         <pre>{{ res.response|jsonFormatter }}</pre>

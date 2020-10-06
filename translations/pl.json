@@ -1,0 +1,14 @@
+{
+  "title": "Dokumentacja IcyMat API",
+  "route_parameters": "Parametry zapytania",
+  "property": {
+    "name": "Nazwa",
+    "type": "Typ",
+    "required": "Wymagany",
+    "description": "Opis",
+    "nullable": "Pusty (null)"
+  },
+  "description": "Opis",
+  "responses": "Odpowiedzi",
+  "parameters": "Parametry zapytania"
+}

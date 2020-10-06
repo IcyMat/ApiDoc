@@ -13,6 +13,33 @@ if (count($argv) == 2) {
 
 $resource = $argv[1];
 $destination = $argv[2];
+$options = [
+    'language' => 'en'
+];
+
+foreach ($argv as $arg) {
+    if ($arg[0] == '-') {
+        $start = 1;
+        if ($arg[1] == '-') {
+            $start = 2;
+        }
+
+        $arg = substr($arg, $start, strlen($arg) - 1);
+        $arg = explode('=', $arg);
+
+        if (isset($arg[1]) && $arg[1] != null) {
+            $options[$arg[0]] = $arg[1];
+        }
+    }
+}
+
+if (!file_exists(__DIR__ . '/../translations/' . $options['language'] . '.json')) {
+    die("Language file does not exists!\n");
+}
+$language = json_decode(
+    file_get_contents(__DIR__ . '/../translations/' . $options['language'] . '.json'),
+    true
+);
 
 $docGenerator = new \IcyMat\ApiDoc\ApiDoc();
 $docData = $docGenerator->generarteDoc(getcwd() . DIRECTORY_SEPARATOR . $resource);
@@ -31,5 +58,5 @@ $twig->addExtension(new \IcyMat\ApiDoc\Twig\JsonFormatterExtension());
 $docPath = getcwd() . DIRECTORY_SEPARATOR . $destination . '/documentation.html';
 
 $f = fopen($docPath, 'w+');
-fputs($f, $twig->render('index.html.twig', ['documentation' => $docData]));
+fputs($f, $twig->render('index.html.twig', ['documentation' => $docData, 'trans' => $language]));
 fclose($f);
