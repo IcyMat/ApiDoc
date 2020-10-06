@@ -56,8 +56,8 @@
                             {% set color = 'green' %}
                             {% set textColor = 'green' %}
                         {% elseif method.methods[0] == 'PUT' %}
-                            {% set color = 'yellow' %}
-                            {% set textColor = 'gray' %}
+                            {% set color = 'orange' %}
+                            {% set textColor = 'orange' %}
                         {% elseif method.methods[0] == 'DELETE' %}
                             {% set color = 'red' %}
                             {% set textColor = 'red' %}
@@ -82,7 +82,7 @@
                                                 <th>Required</th>
                                                 <th>Description</th>
                                             </tr>
-                                            {% for parameter in method.parameters %}
+                                            {% for parameter in method.route_parameters %}
                                                 <tr>
                                                     <td>{{ parameter.name }}</td>
                                                     <td>{{ parameter.type }}</td>
