@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-include_once __DIR__ . '/../../../autoload.php';
+include_once getcwd() . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 if (count($argv) == 1) {
     die("Directory path is required\n");
@@ -15,20 +15,20 @@ $resource = $argv[1];
 $destination = $argv[2];
 
 $docGenerator = new \IcyMat\ApiDoc\ApiDoc();
-$docData = $docGenerator->generarteDoc(__DIR__ . '/../../../../' . $resource);
+$docData = $docGenerator->generarteDoc(getcwd() . DIRECTORY_SEPARATOR . $resource);
 
 $docGenerator = new \IcyMat\ApiDoc\Docs\DocumentationGenerator();
 $docData = $docGenerator->createDocData($docData);
 
-if (!file_exists(__DIR__ . '/../../../../' . $destination)) {
-    mkdir(__DIR__ . '/../../../../' . $destination);
+if (!file_exists(getcwd() . DIRECTORY_SEPARATOR . $destination)) {
+    mkdir(getcwd() . DIRECTORY_SEPARATOR . $destination);
 }
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
 $twig->addExtension(new \IcyMat\ApiDoc\Twig\JsonFormatterExtension());
 
-$docPath = __DIR__ . '/../../../../' . $destination . '/documentation.html';
+$docPath = getcwd() . DIRECTORY_SEPARATOR . $destination . '/documentation.html';
 
 $f = fopen($docPath, 'w+');
 fputs($f, $twig->render('index.html.twig', ['documentation' => $docData]));
