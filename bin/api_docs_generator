@@ -14,7 +14,8 @@ if (count($argv) == 2) {
 $resource = $argv[1];
 $destination = $argv[2];
 $options = [
-    'language' => 'en'
+    'language' => 'en',
+    'format' => 'html'
 ];
 
 foreach ($argv as $arg) {
@@ -41,6 +42,10 @@ $language = json_decode(
     true
 );
 
+if (!in_array($options['format'], ['html', 'json'])) {
+    die("Available formats are 'html' and 'json'\n");
+}
+
 $docGenerator = new \IcyMat\ApiDoc\ApiDoc();
 $docData = $docGenerator->generarteDoc(getcwd() . DIRECTORY_SEPARATOR . $resource);
 
@@ -55,8 +60,17 @@ $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
 $twig->addExtension(new \IcyMat\ApiDoc\Twig\JsonFormatterExtension());
 
-$docPath = getcwd() . DIRECTORY_SEPARATOR . $destination . '/documentation.html';
+$docPath = getcwd() . DIRECTORY_SEPARATOR . $destination . '/documentation.' . $options['format'];
 
-$f = fopen($docPath, 'w+');
-fputs($f, $twig->render('index.html.twig', ['documentation' => $docData, 'trans' => $language]));
-fclose($f);
+if ($options['format'] == 'json') {
+    file_put_contents(
+        $docPath,
+        json_encode($docData)
+    );
+} else {
+    $f = fopen($docPath, 'w+');
+    fputs($f, $twig->render('index.html.twig', ['documentation' => $docData, 'trans' => $language]));
+    fclose($f);
+}
+
+echo "Done\n";
