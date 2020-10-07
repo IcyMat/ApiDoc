@@ -10,5 +10,6 @@
   },
   "description": "Description",
   "responses": "Responses",
-  "parameters": "Parameters"
+  "parameters": "Parameters",
+  "warning": "Warning"
 }

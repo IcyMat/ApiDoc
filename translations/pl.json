@@ -10,5 +10,6 @@
   },
   "description": "Opis",
   "responses": "Odpowiedzi",
-  "parameters": "Parametry zapytania"
+  "parameters": "Parametry zapytania",
+  "warning": "Uwaga"
 }

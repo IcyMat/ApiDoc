@@ -2,6 +2,7 @@
 
 namespace IcyMat\ApiDoc;
 
+use IcyMat\ApiDoc\Parser\ApiDeprecated;
 use IcyMat\ApiDoc\Parser\ApiDescription;
 use IcyMat\ApiDoc\Parser\ApiMethod;
 use IcyMat\ApiDoc\Parser\ApiParams;
@@ -65,6 +66,13 @@ class AnnotationParser
                     'key' => 'response',
                     'value' => ApiResponse::parseLine($line),
                     'method' => 'append'
+                ];
+
+            case '@ApiDeprecated':
+                return [
+                    'key' => 'deprecated',
+                    'value' => ApiDeprecated::parseLine($line),
+                    'method' => 'write'
                 ];
         }
 

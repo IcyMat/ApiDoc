@@ -67,10 +67,16 @@
 
                         <div class="imd-col-12">
                             <div class="imd-notification imd-bg-20-{{ color }} imd-text-{{ textColor }}">
-                                <strong>{{ method.methods[0] }}</strong> {{ method.route }}
+                                <strong{% if method.deprecated is defined %} style="text-decoration: line-through;"{% endif %}>{{ method.methods[0] }}</strong>
+                                {{ method.route }}{% if method.deprecated is defined %} (deprecated){% endif %}
                             </div>
 
                             <div class="details">
+                                {% if method.deprecated is defined %}
+                                    <h2 class="imd-text-red">{{ trans.warning }}!</h2>
+                                    {{ method.deprecated.description }}
+                                {% endif %}
+
                                 {% if method.route_parameters|length > 0 %}
                                     <h2>{{ trans.route_parameters }}</h2>
                                     <div class="imd-table-responsive">
