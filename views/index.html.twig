@@ -157,6 +157,36 @@
                                         <pre>{{ res.response|jsonFormatter }}</pre>
                                     {% endfor %}
                                 {% endif %}
+
+                                {% if method.response_parameters|length > 0 %}
+                                    <h3>{{ trans.response_parameters }}</h3>
+                                    <div class="imd-table-responsive">
+                                        <table class="imd-table imd-table-bordered imd-table-border-color-20-gray">
+                                            <tr>
+                                                <th>{{ trans.property.name }}</th>
+                                                <th>{{ trans.property.type }}</th>
+                                                <th>{{ trans.property.nullable }}</th>
+                                                <th>{{ trans.property.description }}</th>
+                                            </tr>
+                                            {% for parameter in method.response_parameters %}
+                                                <tr>
+                                                    <td>{{ parameter.name }}</td>
+                                                    <td>{{ parameter.type }}</td>
+                                                    {% if parameter.nullable %}
+                                                        <td class="imd-text-green">
+                                                            ✔
+                                                        </td>
+                                                    {% else %}
+                                                        <td class="imd-text-red">
+                                                            ✗
+                                                        </td>
+                                                    {% endif %}
+                                                    <td>{{ parameter.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
