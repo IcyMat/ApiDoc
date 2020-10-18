@@ -29,10 +29,12 @@ abstract class ApiParams implements ParserInterface
      */
     private static function parseParameters($parameters)
     {
+        $parameters = str_replace(':', '[_ICYMAT_API_DOC_COLON_]', $parameters);
         $parameters = str_replace('="', ':"', $parameters);
         $parameters = str_replace('=false', ':false', $parameters);
         $parameters = str_replace('=true', ':true', $parameters);
         $parameters = self::createJson($parameters);
+        $parameters = str_replace('[_ICYMAT_API_DOC_COLON_]', ':', $parameters);
 
         return json_decode($parameters, true);
     }

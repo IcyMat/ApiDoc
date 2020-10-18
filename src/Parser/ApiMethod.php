@@ -43,8 +43,10 @@ abstract class ApiMethod implements ParserInterface
      */
     private static function parseParameters($parameters)
     {
+        $parameters = str_replace(':', '[_ICYMAT_API_DOC_COLON_]', $parameters);
         $parameters = str_replace('="', ':"', $parameters);
         $parameters = self::createJson($parameters);
+        $parameters = str_replace('[_ICYMAT_API_DOC_COLON_]', ':', $parameters);
         $parameters = json_decode($parameters, true);
 
         if (isset($parameters['method'])) {
